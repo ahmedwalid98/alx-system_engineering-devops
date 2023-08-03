@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#display litening port
+
+netstat -l
