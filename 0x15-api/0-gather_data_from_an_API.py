@@ -5,18 +5,11 @@ import sys
 
 
 if __name__ == '__main__':
-    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                         .format(sys.argv[1])).json()
-    tasks = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'
-                         .format(sys.argv[1])).json()
-    completed = 0
-    sum = 0
-    username = user.get('name')
-    for task in tasks:
-        if task.get('completed') == True:
-            completed += 1
-        sum += 1
-    print(f'Employee {username} is done with ({completed}/{sum}):')
-    for task in tasks:
-        if task.get('completed') == True:
-            print(f'\t {task.get("title")}')
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(sys.argv[1])).json()
+    todos = requests.get(url + "todos", params={"userId": sys.argv[1]}).json()
+
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with tasks({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
+    [print("\t {}".format(c)) for c in completed]
