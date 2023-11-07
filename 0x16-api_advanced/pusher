@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+chmod +x *.py
+git add .
+git commit -m 'restful apis'
+git push
